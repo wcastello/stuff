@@ -50,16 +50,12 @@ struct Flip flipbittowin(int num)
 // O(b)
 int msb_pos(int num)
 {
+    if (num < 0)
+        return 4 * sizeof(num) - 1;
+
     int pos = 0;
 
-    // printf("num = %d\n", num);
-    while (num || num != -1) {
-        num >>= 1;
-        pos++;
-        // printf("%d, %d\n", num, pos);
-    }
-
-    if (num == -1)
+    while (num >>= 1)
         pos++;
     
     return pos;
@@ -97,6 +93,9 @@ int count_longest_set_bits(int num)
 
 int flipbittowin2(int num)
 {
+    if (num == 0)
+        return 1;
+
     int seq_sizes[4 * sizeof(num)], size, j;
     bool last_bit, curr_bit;
     last_bit = getbit(num, 0);

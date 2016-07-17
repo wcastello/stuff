@@ -24,7 +24,7 @@ void stack_init(Stack *s, size_t elemsize, int (*cmpfn)(const void *p, const voi
 void * stack_pop(Stack *s)
 {
     void *data = list_pop(s->data_list);
-    if (s->mins->length > 0 && s->cmpfn(data, s->mins->head->data) == 0) {
+    if (s->cmpfn && s->mins->length > 0 && s->cmpfn(data, s->mins->head->data) == 0) {
         list_pop(s->mins);
     }
     return data;

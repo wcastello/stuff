@@ -74,6 +74,21 @@ void list_remove_node(LinkedList * list, Node * node) {
     // there's got to be some free function for the node content too or we'll leak memory
 }
 
+void list_remove(LinkedList * list, void * data) {
+    Node *curr = list->head;
+    Node *found = NULL;
+    while (curr) {
+        if (memcmp(curr->data, data, list->elemsize) == 0) {
+            found = curr;
+            break;
+        }
+        curr = curr->next;
+    }
+
+    if (found)
+        list_remove_node(list, found);
+}
+
 void * list_pop(LinkedList *list)
 {
     void *data = NULL;

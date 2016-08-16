@@ -1,24 +1,29 @@
 # this is ridiculous.
 
 def zorder(x, y, size):
+    # make sure we're not out of bounds and using a power of 2 size
+    # could've used the bitcount() from problem 1 to assert for the power of 2.
     assert size > 0 and bin(size).count('1') == 1, 'size >= 0 should be a power of 2'
     assert 0 <= x < size and 0 <= y < size, 'x and y should be in [0, size)'
 
+    # base case
     if size == 1:
         return 0
 
-    offset = { (0, 0): 0, (0, 1): (size//2)**2, (1, 0): 2*(size//2)**2, (1, 1): 3*(size//2)**2 }
+    # get quadrant of (x, y)
+    offset = { (0, 0): 0, (1, 0): (size//2)**2, (0, 1): 2*(size//2)**2, (1, 1): 3*(size//2)**2 }
     q_x = x//(size//2)
     q_y = y//(size//2)
 
+    # takes size from 2^n -> 2^(n-1), O(log_2(n)) time.
     return offset[(q_x, q_y)] + zorder(x%(size//2), y%(size//2), size//2)
 
+
 def print_grid(size):
-    assert()
     for i in range(size):
         row = []
         for j in range(size):
-            row.append(str(zorder(i, j, size)))
+            row.append(str(zorder(j, i, size)))
         print(' '.join(row))
 
 # zorder(4, 3, 8)

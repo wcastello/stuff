@@ -1,16 +1,20 @@
 # this is ridiculous.
 
 def zorder(x, y, size):
+    assert size > 0 and bin(size).count('1') == 1, 'size >= 0 should be a power of 2'
+    assert 0 <= x < size and 0 <= y < size, 'x and y should be in [0, size)'
+
     if size == 1:
         return 0
 
     offset = { (0, 0): 0, (0, 1): (size//2)**2, (1, 0): 2*(size//2)**2, (1, 1): 3*(size//2)**2 }
-    x_ = x//(size//2)
-    y_ = y//(size//2)
+    q_x = x//(size//2)
+    q_y = y//(size//2)
 
-    return offset[(x_, y_)] + zorder(x%(size//2), y%(size//2), size//2)
+    return offset[(q_x, q_y)] + zorder(x%(size//2), y%(size//2), size//2)
 
 def print_grid(size):
+    assert()
     for i in range(size):
         row = []
         for j in range(size):
